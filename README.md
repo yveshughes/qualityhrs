@@ -2,7 +2,7 @@
 
 Some inspiration for effects on image grids. The ideas include animations on the opening grid item, the disappearance of the grid and the resulting view.
 
-[Article on Codrops](http://tympanus.net/codrops/?p=25256)
+[Article on theme](http://tympanus.net/theme/?p=25256)
 
 [Demo](http://tympanus.net/Development/ImageGridEffects/)
 
@@ -10,7 +10,7 @@ Some inspiration for effects on image grids. The ideas include animations on the
 
 Integrate or build upon it for free in your personal or commercial projects. Don't republish, redistribute or sell "as-is". 
 
-Read more here: [License](http://tympanus.net/codrops/licensing/)
+Read more here: [License](http://tympanus.net/theme/licensing/)
 
 ## Credits
 
@@ -24,9 +24,9 @@ Images from [Unsplash.com](http://www.unsplash.com)
 
 ## Misc
 
-Follow Codrops: [Twitter](http://www.twitter.com/codrops), [Facebook](http://www.facebook.com/pages/Codrops/159107397912), [Google+](https://plus.google.com/101095823814290637419), [GitHub](https://github.com/codrops), [Pinterest](http://www.pinterest.com/codrops/)
+Follow theme: [Twitter](http://www.twitter.com/theme), [Facebook](http://www.facebook.com/pages/theme/159107397912), [Google+](https://plus.google.com/101095823814290637419), [GitHub](https://github.com/theme), [Pinterest](http://www.pinterest.com/theme/)
 
-[© Codrops 2015](http://www.codrops.com)
+[© theme 2015](http://www.theme.com)
 
 
 

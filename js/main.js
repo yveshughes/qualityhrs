@@ -1,12 +1,12 @@
 /**
  * main.js
- * http://www.codrops.com
+ * http://www.theme.com
  *
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  * 
- * Copyright 2015, Codrops
- * http://www.codrops.com
+ * Copyright 2015, theme
+ * http://www.theme.com
  */
 ;(function(window) {
 
