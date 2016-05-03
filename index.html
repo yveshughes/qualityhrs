@@ -47,12 +47,13 @@
 		<header class="theme-header">
 			
 			<h1>Quality services when you need it!</h1>
-			<nav class="theme-demos">
-				<a href="#">Plumbing</a>
-                <a href="#">Electrical</a>
-                <a href="#">Carpentry</a>
-                <a href="#">Painting</a>
-                <a href="#">Flooring</a>
+			<nav class="theme-demos" id="categorySelector">
+				<a href="#">All</a>
+				<a href="#" id="Plumbing">Plumbing</a>
+                <a href="#" id="Electrical">Electrical</a>
+                <a href="#" id="Carpentry">Carpentry</a>
+                <a href="#" id="Painting">Painting</a>
+                <a href="#" id="Flooring">Flooring</a>
 			</nav>
 		</header>
 		<div class="content">
@@ -71,10 +72,12 @@
 	<!-- /container -->
 	<script src="js/imagesloaded.pkgd.min.js" type="text/javascript"></script>
 	<script src="js/masonry.pkgd.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/masonry.filter.js"></script>
 	<script src="js/classie.js" type="text/javascript"></script>
 	<script src="js/main.js" type="text/javascript"></script>
 	<script>
 		$(document).ready(function(){
+			var self;
 			var jsonURL = "gallery.json";
 			var support = { transitions: Modernizr.csstransitions },
 			// transition end event name
@@ -95,52 +98,69 @@
 							onEndCallbackFn();
 						}
 					};
-			$.getJSON(jsonURL, function(json)
-			{
-				var imgList= "";
-				$.each(json.items, function(){
-					imgList +='<div class="grid__item" data-size="' + this.datasize + '"> <a href="'+ this.original + '" class="img-wrap"><img src="' + this.thumbs + '" alt="'+ this.alt + '"/>' +
-							'<div class="description  description--grid"><h3>' + this.title + '</h3><p>' + this.description + '</p><div class="details"><ul><li><i class="icon icon-camera"></i><span>' +
-							this.camera + '</span></li><li><i class="icon icon-focal_length"></i><span>' + this.length + '</span></li><li><i class="icon icon-aperture"></i><span>' + this.aperture +
-							'</span></li><li><i class="icon icon-exposure_time"></i><span>' + this.extime + '</span></li><li><i class="icon icon-iso"></i><span>' + this.iso +
-							'</span></li></ul></div></div></a></div>';
-				});
-				$('#dvProdList').append(imgList);
-				new GridFx(document.querySelector('.grid'), {
-					imgPosition : {
-						x : -0.5,
-						y : 1
-					},
-					onOpenItem : function(instance, item) {
-						instance.items.forEach(function(el) {
-							if(item != el) {
-								var delay = Math.floor(Math.random() * 50);
-								el.style.WebkitTransition = 'opacity .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1), -webkit-transform .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1)';
-								el.style.transition = 'opacity .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1), transform .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1)';
-								el.style.WebkitTransform = 'scale3d(0.1,0.1,1)';
-								el.style.transform = 'scale3d(0.1,0.1,1)';
-								el.style.opacity = 0;
-							}
-						});
-					},
-					onCloseItem : function(instance, item) {
-						instance.items.forEach(function(el) {
-							if(item != el) {
-								el.style.WebkitTransition = 'opacity .4s, -webkit-transform .4s';
-								el.style.transition = 'opacity .4s, transform .4s';
-								el.style.WebkitTransform = 'scale3d(1,1,1)';
-								el.style.transform = 'scale3d(1,1,1)';
-								el.style.opacity = 1;
+			$('#categorySelector').on('click', 'a', function(event){
+				event.preventDefault();
+				var category = event.target.id;
 
-								onEndTransition(el, function() {
-									el.style.transition = 'none';
-									el.style.WebkitTransform = 'none';
-								});
-							}
-						});
-					}
-				});
+				self.masonryFilter({
+					filter: function () {
+						if(!category) return true;
+						return $(this).attr("category") == category;
+					}})
 			});
+			function draw(category){
+				$.getJSON(jsonURL, function(json)
+				{
+					var imgList= "";
+					$.each(json.items, function(){
+						if(category && category != this.category) return;
+						imgList +='<div class="grid__item" data-size="' + this.datasize + '" category="' + this.category + '" > <a href="'+ this.original + '" class="img-wrap"><img src="' + this.thumbs + '" alt="'+ this.alt + '"/>' +
+								'<div class="description  description--grid"><h3>' + this.title + '</h3><p>' + this.description + '</p><div class="details"><ul><li><i class="icon icon-camera"></i><span>' +
+								this.camera + '</span></li><li><i class="icon icon-focal_length"></i><span>' + this.length + '</span></li><li><i class="icon icon-aperture"></i><span>' + this.aperture +
+								'</span></li><li><i class="icon icon-exposure_time"></i><span>' + this.extime + '</span></li><li><i class="icon icon-iso"></i><span>' + this.iso +
+								'</span></li></ul></div></div></a></div>';
+					});
+					$('#dvProdList').append(imgList);
+
+					self = $(".grid");
+					new GridFx(self.get(0), {
+						imgPosition : {
+							x : -0.5,
+							y : 1
+						},
+						onOpenItem : function(instance, item) {
+							instance.items.forEach(function(el) {
+								if(item != el) {
+									var delay = Math.floor(Math.random() * 50);
+									el.style.WebkitTransition = 'opacity .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1), -webkit-transform .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1)';
+									el.style.transition = 'opacity .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1), transform .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1)';
+									el.style.WebkitTransform = 'scale3d(0.1,0.1,1)';
+									el.style.transform = 'scale3d(0.1,0.1,1)';
+									el.style.opacity = 0;
+								}
+							});
+						},
+						onCloseItem : function(instance, item) {
+							instance.items.forEach(function(el) {
+								if(item != el) {
+									el.style.WebkitTransition = 'opacity .4s, -webkit-transform .4s';
+									el.style.transition = 'opacity .4s, transform .4s';
+									el.style.WebkitTransform = 'scale3d(1,1,1)';
+									el.style.transform = 'scale3d(1,1,1)';
+									el.style.opacity = 1;
+
+									onEndTransition(el, function() {
+										el.style.transition = 'none';
+										el.style.WebkitTransform = 'none';
+									});
+								}
+							});
+						}
+					});
+				});
+			}
+			draw()
+
 		});
 	</script>
     

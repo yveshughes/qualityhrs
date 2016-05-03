@@ -106,7 +106,7 @@
 		// init masonry after all images are loaded
 		imagesLoaded( this.gridEl, function() {
 			// initialize masonry
-			new Masonry(self.gridEl, {
+			$(self.gridEl).masonry( {
 				itemSelector: '.grid__item',
 				isFitWidth : true
 			});
